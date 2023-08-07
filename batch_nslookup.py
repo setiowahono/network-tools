@@ -3,7 +3,7 @@ import sys
 
 def resolve_domain(domain_name):
     try:
-        ip_address = socket.gethostbyname(domain_name)
+        ip_address = socket.gethostbyname_ex(domain_name)
         return ip_address
     except socket.gaierror:
         return None
@@ -18,7 +18,7 @@ def main():
         for domain_name in domain_names:
             ip_address = resolve_domain(domain_name)
             if ip_address:
-                print(f"{domain_name} is resolved to {ip_address}")
+                print(f"{domain_name} is resolved to {', '.join(ip_address[2])}")
             else:
                 print(f"{domain_name} could not be resolved")
 
