@@ -16,20 +16,27 @@ def main():
     dns_resolver = dns.resolver.Resolver()
     print(f"DNS: {dns_resolver.nameservers[0]}")
     print('--------')
-
+    
     target = sys.argv[1]
-    port = sys.argv[2]
+    input_file = sys.argv[2]
 
     try:
         ip_address = socket.gethostbyname(target)
-        if check_port(ip_address, int(port)):
-            print(f"Port {port} is open on {target} ({ip_address})")
-        else:
-            print(f"Port {port} is closed on {target} ({ip_address})")
+        with open(input_file, 'r') as file:
+            common_ports = file.read().splitlines()
+
+        for common_port in common_ports:
+            if check_port(ip_address, int(common_port)):
+                print(f"Port {common_port} is OPEN on {target} ({ip_address})")
+            else:
+                print(f"Port {common_port} is closed on {target} ({ip_address})")
+
     except socket.gaierror:
         print(f"Could not resolve {target}")
     except ValueError:
         print("Invalid port number")
+    except FileNotFoundError:
+        print(f"File '{input_file}' not found.")
     except Exception as e:
         print(f"An error occurred: {e}")
 
