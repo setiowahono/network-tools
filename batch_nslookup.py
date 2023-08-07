@@ -1,5 +1,6 @@
 import socket
 import sys
+import dns.resolver
 
 def resolve_domain(domain_name):
     try:
@@ -9,6 +10,10 @@ def resolve_domain(domain_name):
         return None
 
 def main():
+    dns_resolver = dns.resolver.Resolver()
+    print(f"DNS: {dns_resolver.nameservers[0]}")
+    print('--------')
+
     input_file = sys.argv[1]
 
     try:
