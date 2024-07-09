@@ -23,7 +23,7 @@ def main():
         for domain_name in domain_names:
             ip_address = resolve_domain(domain_name)
             if ip_address:
-                print(f"{domain_name} is resolved to {', '.join(ip_address[2])}")
+                print(f"{domain_name} ({', '.join(ip_address[2])})")
             else:
                 print(f"{domain_name} could not be resolved")
 
